@@ -28,17 +28,30 @@ def safe_eval(expr: str, variables: Dict[str, Any]):
 def parse_args(args):
     parser = argparse.ArgumentParser(prog="pancalc", description="""
     Calculator written in python. small project allowing you to perform some easy calculation from command line.
-    Named derived from pancake (github project suggestion name) 
+    Named derived from pancake (github project suggestion name) .
+    Examples may be
+    
+    pancalc 2+2 # 4
+    pancalc (2+2) # 4
+    pancalc (2 + 2) #4
+    pancalc (2**2) # 4
+    pancacl -V X 2 X**2 # 4
     """
     )
     parser.add_argument("-V", "--variable", action="append", nargs=2, default=[], help="""
     Varaible avaialble during calculation
     """)
     parser.add_argument("expression", type=str, nargs="+", help="""
-    Expression to compute
+    Expression to compute. The expression can be any python string. May contain any funciton in math module
+    """)
+    parser.add_argument("-i", "--force-int", action="store_true", help="""
+        Force the output of the expression to be displayed as int
+    """)
+    parser.add_argument("-f", "--force-float", action="store_true", help="""
+        Force the output of the expression to be displayed as float
     """)
     parser.add_argument("-v", "--version", action="store_true", help="""
-    Show progam version and exits
+    Show progam version and exits.
     """)
 
     return parser.parse_args(args)
@@ -53,12 +66,20 @@ def main():
             sys.exit(0)
 
         expr = ' '.join(options.expression)
-        variable = {x[0]: x[1] for x in options.variable}
+        variable = {x[0]: float(x[1]) for x in options.variable}
 
         output = safe_eval(
             expr=expr,
             variables=variable
         )
+
+        if options.force_int:
+            output = int(output)
+        elif options.force_float:
+            output = float(output)
+        else:
+            output = output
+
         print(output)
     except Exception as e:
         print(e)
