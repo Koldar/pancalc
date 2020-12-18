@@ -29,13 +29,6 @@ def parse_args(args):
     parser = argparse.ArgumentParser(prog="pancalc", description="""
     Calculator written in python. small project allowing you to perform some easy calculation from command line.
     Named derived from pancake (github project suggestion name) .
-    Examples may be
-    
-    pancalc 2+2 # 4
-    pancalc (2+2) # 4
-    pancalc (2 + 2) #4
-    pancalc (2**2) # 4
-    pancacl -V X 2 X**2 # 4
     """
     )
     parser.add_argument("-V", "--variable", action="append", nargs=2, default=[], help="""
