@@ -1,5 +1,15 @@
+# idea
+
 .idea/
 
+# fodlers 
+
 venv/
+build/
+dist/
+pancalc.egg-info
+
+# pmake files
 
 *PASSWORD*
+pmake-cache.json
